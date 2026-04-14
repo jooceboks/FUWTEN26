@@ -336,32 +336,46 @@ style.textContent = `
   /* ── MOBILE OVERRIDES ── */
   @media (max-width: 640px) {
     #hero-header {
-      top: 16px; width: 90vw;
+      top: 16px; width: 92vw;
     }
     #hero-header h1 {
-      font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.7);
+      font-size: 13px; letter-spacing: 4px;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.8);
     }
     #hero-header h2 {
-      font-size: 32px; letter-spacing: 3px;
+      font-size: 34px; letter-spacing: 3px;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6));
     }
     #hero-header p {
-      font-size: 12px; color: rgba(255,255,255,0.6); letter-spacing: 1.5px;
+      font-size: 13px; color: rgba(255,255,255,0.8);
+      letter-spacing: 0.5px; text-transform: none;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.9);
+      line-height: 1.5;
     }
     #instructions {
       bottom: 32px; width: 88vw;
     }
     #instructions span {
-      font-size: 13px; letter-spacing: 0.5px; color: rgba(255,255,255,0.65);
+      font-size: 13px; letter-spacing: 0.5px; color: rgba(255,255,255,0.75);
       padding: 10px 18px; line-height: 1.5;
     }
     #audio-toggle {
       bottom: 32px; right: 16px; width: 44px; height: 44px; font-size: 18px;
     }
     #modal-card {
-      width: 92%; padding: 24px 20px; border-radius: 16px;
+      width: 94%; padding: 24px 20px; border-radius: 16px;
+      max-height: 88vh; overflow-y: auto;
     }
-    #modal-card h3 { font-size: 20px; }
-    #modal-card .modal-note { font-size: 13px; }
+    #modal-card h3 { font-size: 22px; }
+    #modal-card .modal-note {
+      font-size: 15px !important; line-height: 1.75 !important;
+      color: rgba(255,255,255,0.95) !important;
+    }
+    #modal-card .modal-note span {
+      font-size: 15px !important; line-height: 1.75 !important;
+      color: rgba(255,255,255,0.95) !important;
+    }
     #modal-card .modal-badge { font-size: 10px; }
     #gallery-panel { width: 100vw; max-width: 100vw; }
     #carousel-prev { left: -46px; }
