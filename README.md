@@ -1,7 +1,3 @@
-# New chat
-
-Created with [Omma](https://omma.build)
-
 ## Setup
 
 ```bash
