@@ -119,7 +119,6 @@ function openModal(data) {
     const losses = results.filter(r => r.result === 'L').length;
     const maacW  = results.filter(r => r.maac && r.result === 'W').length;
     const maacL  = results.filter(r => r.maac && r.result === 'L').length;
-    const winPct = Math.round((wins / results.length) * 100);
 
     const modalCard = document.getElementById('modal-card');
     modalCard.style.maxWidth = '520px';
@@ -137,14 +136,6 @@ function openModal(data) {
         <div style="font-size:22px;font-weight:800;color:#ffd700;">${maacW}\u2013${maacL}</div>
         <div style="font-size:9px;letter-spacing:2px;color:rgba(255,215,0,0.5);text-transform:uppercase;margin-top:2px;">MAAC</div>
       </div>
-      <div style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:12px;text-align:center;">
-        <div style="font-size:22px;font-weight:800;color:#fff;">${winPct}%</div>
-        <div style="font-size:9px;letter-spacing:2px;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-top:2px;">Win Rate</div>
-      </div>
-    </div>`;
-
-    const bar = `<div style="height:6px;border-radius:6px;background:rgba(255,255,255,0.06);overflow:hidden;margin-bottom:16px;">
-      <div style="height:100%;width:${winPct}%;background:linear-gradient(90deg,#cc0000,#ffd700);border-radius:6px;"></div>
     </div>`;
 
     const rows = results.map(r => {
@@ -165,15 +156,15 @@ function openModal(data) {
       </div>`
     ).join('');
 
-    modalNote.innerHTML = statsRow + bar +
+    modalNote.innerHTML = statsRow +
       '<div style="max-height:220px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(204,0,0,0.3) transparent;margin-bottom:14px;">' + rows + '</div>' +
       '<div style="font-size:9px;letter-spacing:2px;color:rgba(255,255,255,0.2);text-transform:uppercase;margin-bottom:8px;">Upcoming</div>' +
       upcomingRows;
   } else if (data.type === 'creator') {
     modalBadge.textContent = 'CREATOR NOTE';
-    modalTitle.textContent = 'A Message from sliu';
+    modalTitle.textContent = 'A Message from Sliu';
     modalTitle.style.cssText = 'background:linear-gradient(135deg,#fff,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:21.6px;font-weight:700;white-space:nowrap;margin-bottom:6px;';
-    modalNote.innerHTML = '<span style="color:rgba(255,255,255,0.92);line-height:1.6;display:block;">To my 2025\u20132026 team: Building this was my way of bottling up the energy, the late-night bus rides, and the absolute grind we shared on these courts. I wanted to create something as permanent as the memories we made. As I graduate, I\u2019m leaving a piece of this court behind with you. Roll Stags! \uD83E\uDECC\uD83C\uDFBE</span><div class="modal-creator-signature" style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,215,0,0.15);text-align:right;"><span style="font-family:Georgia,serif;font-style:italic;font-size:18px;color:rgba(255,215,0,0.7);letter-spacing:1px;">Sarah Liu \'26 \uD83C\uDF93</span></div>';
+    modalNote.innerHTML = '<span style="color:rgba(255,255,255,0.92);line-height:1.6;display:block;">To my 2025\u20132026 team: Building this was my way of bottling up the energy, the late-night bus rides, and the absolute grind we shared on these courts. I wanted to create something as permanent as the memories we made. As I graduate, I\u2019m leaving a piece of this court behind with you. Roll Stags!</span><div class="modal-creator-signature" style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,215,0,0.15);text-align:right;"><span style="font-family:Georgia,serif;font-style:italic;font-size:18px;color:rgba(255,215,0,0.7);letter-spacing:1px;">Sarah Liu \'26 \uD83C\uDF93</span></div>';
   }
 
   modalOverlay.classList.add('active');
