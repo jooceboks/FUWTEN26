@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { scene, camera, renderer, controls, clock } from './src/scene.js';
 import { courtGroup, glowMat, logoMaterial, fuMat, wtenMat, particles, PARTICLE_COUNT } from './src/court.js';
 import { ballGroup, hoverScaleTarget } from './src/players.js';
-import { buildTrophy, buildJacket, buildRacket, build3DCamera, buildPlaque } from './src/props.js';
+import { buildTrophy, buildJacket, buildRacket, build3DCamera, buildPlaque, buildRing } from './src/props.js';
 import { playerImages, results, upcoming } from './src/data.js';
 import {
   header, instDiv, toggleGallery, openCarousel,
@@ -18,6 +18,7 @@ const jacket     = buildJacket(clickableObjects);
 const racket     = buildRacket(clickableObjects);
 const camera3D   = build3DCamera(clickableObjects);
 const creatorPlaque = buildPlaque(clickableObjects);
+const ring          = buildRing(clickableObjects);
 
 // Register balls as clickable (already added to scene in players.js)
 ballGroup.children.forEach(c => {
@@ -106,6 +107,11 @@ function openModal(data) {
     modalBadge.textContent = 'CHAMPIONS TROPHY';
     modalTitle.textContent = 'A Symbol of Our Effort';
     modalNote.innerHTML = '<span style="color:rgba(255,255,255,0.92);line-height:1.6;display:block;">This trophy represents the hard work and effort we poured into every set, but to me, we are winners because of the <strong><span style="color:#C8102E;">people themselves</span></strong>\u2014not just the outcomes of the matches. I truly appreciate having such a supportive team to look back on. You all created a truly incredible senior year for me, and that is the <strong><span style="color:#C8102E;">real win</span></strong>.</span>';
+  } else if (data.type === 'ring') {
+    modalBadge.textContent = 'ASSISTANT COACH';
+    modalTitle.textContent = 'Daniella Medvedeva';
+    modalTitle.style.cssText = 'background:linear-gradient(135deg,#fff,#c0c0c0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:22px;font-weight:700;margin-bottom:6px;';
+    modalNote.innerHTML = '<span style="color:rgba(255,255,255,0.92);line-height:1.7;display:block;">' + data.note + '</span>';
   } else if (data.type === 'jacket') {
     modalBadge.style.display = 'none';
     modalTitle.textContent = 'The Coaching Staff';
@@ -242,6 +248,7 @@ renderer.domElement.addEventListener('click', async (e) => {
   else if (data.type === 'trophy')  { camPos = new THREE.Vector3(-7,3,0);   targetLook = new THREE.Vector3(-10,1.5,-3); }
   else if (data.type === 'jacket')  { camPos = new THREE.Vector3(-7,3,6);   targetLook = new THREE.Vector3(-10,1.5,3);  }
   else if (data.type === 'racket')  { camPos = new THREE.Vector3(7,4,6);    targetLook = new THREE.Vector3(10,3.5,3);   }
+  else if (data.type === 'ring')    { camPos = new THREE.Vector3(-6,3,3);   targetLook = new THREE.Vector3(-8.5,1.5,1.2); }
   else if (data.type === 'creator') { camPos = new THREE.Vector3(6,3,5);    targetLook = new THREE.Vector3(3.5,1.5,1.8); }
 
   animateCameraTo(camPos, targetLook, () => openModal(data));
@@ -306,6 +313,15 @@ function animate() {
 
   creatorPlaque.position.y = Math.sin(time * 0.7 + 2) * 0.08;
   creatorPlaque.rotation.y = Math.sin(time * 0.5) * 0.08;
+  ring.position.y = 1.5 + Math.sin(time * 1.1 + 1) * 0.1;
+  ring.rotation.y = time * 0.4;
+  ring.children.forEach(c => {
+    if (c.name === 'ringGem') {
+      c.rotation.y = time * 3;
+      c.rotation.x = time * 2;
+      c.material.emissiveIntensity = 0.5 + Math.abs(Math.sin(time * 4)) * 0.8;
+    }
+  });
 
   racket.position.y = 1.2 + Math.sin(time * 0.9) * 0.25;
   racket.rotation.y = -0.3 + Math.sin(time * 0.6) * 0.2;

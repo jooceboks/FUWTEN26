@@ -206,6 +206,34 @@ export function build3DCamera(clickableObjects) {
   return group;
 }
 
+// ─── CHAMPIONSHIP RING ───
+export function buildRing(clickableObjects) {
+  const group = new THREE.Group(); group.name = 'ringGroup';
+  const silverMat = new THREE.MeshStandardMaterial({ color: 0xe0e0e0, metalness: 0.96, roughness: 0.06, emissive: 0x888888, emissiveIntensity: 0.05 });
+
+  // Simple torus hoop
+  const hoop = new THREE.Mesh(new THREE.TorusGeometry(0.38, 0.07, 20, 80), silverMat);
+  group.add(hoop);
+
+  // Sparkle gem on top of the hoop
+  const gem = new THREE.Mesh(new THREE.OctahedronGeometry(0.13, 0),
+    new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.1, roughness: 0.0, emissive: 0xffffff, emissiveIntensity: 0.8, transparent: true, opacity: 0.92 }));
+  gem.name = 'ringGem';
+  gem.position.set(0, 0.38, 0);
+  group.add(gem);
+
+  group.scale.setScalar(0.65);
+  group.position.set(-8.5, 1.5, 1.2);
+  group.userData = { type: 'ring', title: 'Assistant Coach', name: 'Daniella Medvedeva',
+    note: 'Dani, you\'ve done so much for the girls and gone truly above and beyond for this team. I truly appreciate your 2 years here with us. You\'ve done the absolute most for every one of us and we\'re so lucky to have had you. You really are the goat for everything you\'ve poured into this program — thank you for being the best coach and mentor we could\'ve asked for!' };
+  group.traverse(c => { if (c.isMesh) { c.userData = group.userData; clickableObjects.push(c); } });
+
+  const rl = new THREE.PointLight(0xbbccff, 0.8, 8);
+  rl.position.set(-10, 4, 6.5); scene.add(rl);
+  scene.add(group);
+  return group;
+}
+
 // ─── CREATOR'S PLAQUE ───
 export function buildPlaque(clickableObjects) {
   const group = new THREE.Group(); group.name = 'creatorsPlaqueGroup';
