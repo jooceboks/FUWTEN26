@@ -3,19 +3,8 @@ export const HIT_SFX_URL = 'https://rrzvgzjttmyseqsmmyvn.supabase.co/storage/v1/
 export const AMBIENT_URL = 'https://rrzvgzjttmyseqsmmyvn.supabase.co/storage/v1/object/sign/attachments/3228282c-0b5e-4ad1-a13a-b9680cafdfa3/generated-audio/lc9j6h2psxs-1776101512184-7u52.mp3?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xMjY1MWQ4My04ODE0LTQ3NzMtOGRlNS00MzliNDBkODY2NmYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJhdHRhY2htZW50cy8zMjI4MjgyYy0wYjVlLTRhZDEtYTEzYS1iOTY4MGNhZmRmYTMvZ2VuZXJhdGVkLWF1ZGlvL2xjOWo2aDJwc3hzLTE3NzYxMDE1MTIxODQtN3U1Mi5tcDMiLCJpYXQiOjE3NzYxMDE1MTIsImV4cCI6MjA5MTQ2MTUxMn0.b0aJV7gYN-DyN2Lf8R2SzwkpTZQAiJf5Guo91TBqB0A';
 
 // ─── PLAYER IMAGES ───
-// Add /assets/roster/<filename> paths here. File must exist in public/assets/roster/.
-export const playerImages = {
-  'Maeve Cassidy':      '/assets/roster/imgi_13_Cassidy.jpg',
-  'Dylin Pizzutello':   '/assets/roster/imgi_23_Pizzutello.jpg',
-  'Lily Malinowski':    '/assets/roster/imgi_20_Malinowski.jpg',
-  'Maria Gell':         '/assets/roster/imgi_14_Gell.jpg',
-  'Nicolette Loeffler': '/assets/roster/imgi_19_Loeffler.jpg',
-  'Victoria Mandma':    '/assets/roster/imgi_21_Mandma.jpg',
-  'Anna Neyestani':     '/assets/roster/imgi_22_Neyestani.jpg',
-  'Meg Harding':        '/assets/roster/imgi_15_Harding.jpg',
-  'Sophia Harris':      '/assets/roster/imgi_16_Harris.jpg',
-  'Regina Herrera':     '/assets/roster/imgi_17_Herrera.jpg',
-};
+// Drop real player photos here if available: { 'Name': '/assets/roster/filename.jpg' }
+export const playerImages = {};
 
 // ─── PLAYER DATA ───
 export const players = [
