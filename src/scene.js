@@ -1,12 +1,15 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
+// ─── MOBILE DETECTION ───
+export const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
 // ─── RENDERER ───
-export const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+export const renderer = new THREE.WebGLRenderer({ antialias: !isMobile, alpha: false });
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFShadowMap; // perf: PCF (not Soft)
+renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = !isMobile;
+renderer.shadowMap.type = THREE.PCFShadowMap;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.3;
 document.getElementById('root').appendChild(renderer.domElement);
@@ -79,20 +82,27 @@ const fillLight = new THREE.PointLight(0xffcccc, 0.6, 50);
 fillLight.position.set(0, 8, 15);
 scene.add(fillLight);
 
-const stadiumLight = new THREE.RectAreaLight(0xffeedd, 2.5, 14, 22);
-stadiumLight.position.set(0, 18, 0);
-stadiumLight.lookAt(0, 0, 0);
-scene.add(stadiumLight);
+if (!isMobile) {
+  const stadiumLight = new THREE.RectAreaLight(0xffeedd, 2.5, 14, 22);
+  stadiumLight.position.set(0, 18, 0);
+  stadiumLight.lookAt(0, 0, 0);
+  scene.add(stadiumLight);
 
-const floodL = new THREE.SpotLight(0xcc0011, 1.2, 40, Math.PI / 6, 0.6, 1);
-floodL.position.set(-15, 15, 0);
-floodL.target.position.set(0, 0, 0);
-scene.add(floodL); scene.add(floodL.target);
+  const floodL = new THREE.SpotLight(0xcc0011, 1.2, 40, Math.PI / 6, 0.6, 1);
+  floodL.position.set(-15, 15, 0);
+  floodL.target.position.set(0, 0, 0);
+  scene.add(floodL); scene.add(floodL.target);
 
-const floodR = new THREE.SpotLight(0xcc0011, 1.2, 40, Math.PI / 6, 0.6, 1);
-floodR.position.set(15, 15, 0);
-floodR.target.position.set(0, 0, 0);
-scene.add(floodR); scene.add(floodR.target);
+  const floodR = new THREE.SpotLight(0xcc0011, 1.2, 40, Math.PI / 6, 0.6, 1);
+  floodR.position.set(15, 15, 0);
+  floodR.target.position.set(0, 0, 0);
+  scene.add(floodR); scene.add(floodR.target);
+} else {
+  // Mobile: two cheap point lights replace the stadium + flood spots
+  const mobileTop = new THREE.PointLight(0xffeedd, 2.0, 60);
+  mobileTop.position.set(0, 18, 0);
+  scene.add(mobileTop);
+}
 
 // ─── RESIZE ───
 window.addEventListener('resize', () => {

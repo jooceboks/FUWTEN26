@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { scene } from './scene.js';
+import { scene, isMobile } from './scene.js';
 
 const goldMat = () => new THREE.MeshStandardMaterial({ color: 0xffd700, metalness: 0.9, roughness: 0.15, emissive: 0xaa7700, emissiveIntensity: 0.15 });
 const stdMat  = (color, opts = {}) => new THREE.MeshStandardMaterial({ color, ...opts });
@@ -239,9 +239,9 @@ export function buildPlaque(clickableObjects) {
   const group = new THREE.Group(); group.name = 'creatorsPlaqueGroup';
 
   const board = new THREE.Mesh(new THREE.BoxGeometry(1.6, 2.2, 0.08),
-    new THREE.MeshPhysicalMaterial({ color: 0xffffff, metalness: 0.1, roughness: 0.05,
-      transparent: true, opacity: 0.55,
-      clearcoat: 1, clearcoatRoughness: 0.05, emissive: 0xcc0000, emissiveIntensity: 0.06 }));
+    isMobile
+      ? new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.1, roughness: 0.3, transparent: true, opacity: 0.55, emissive: 0xcc0000, emissiveIntensity: 0.06 })
+      : new THREE.MeshPhysicalMaterial({ color: 0xffffff, metalness: 0.1, roughness: 0.05, transparent: true, opacity: 0.55, clearcoat: 1, clearcoatRoughness: 0.05, emissive: 0xcc0000, emissiveIntensity: 0.06 }));
   board.position.y = 1.4; group.add(board);
 
   const clipMat = stdMat(0xffd700, { metalness: 0.85, roughness: 0.15, emissive: 0xaa7700, emissiveIntensity: 0.1 });

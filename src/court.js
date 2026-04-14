@@ -1,17 +1,14 @@
 import * as THREE from 'three';
-import { scene } from './scene.js';
+import { scene, isMobile } from './scene.js';
 
 export const courtGroup = new THREE.Group();
 courtGroup.name = 'courtGroup';
 
 // ─── COURT SURFACE ───
 const courtGeo = new THREE.BoxGeometry(16, 0.15, 24);
-export const courtMat = new THREE.MeshPhysicalMaterial({
-  color: 0x2a0000, metalness: 0.15, roughness: 0.05,
-  transparent: true, opacity: 0.88,
-  clearcoat: 1.0, clearcoatRoughness: 0.05,
-  side: THREE.DoubleSide,
-});
+export const courtMat = isMobile
+  ? new THREE.MeshStandardMaterial({ color: 0x2a0000, metalness: 0.15, roughness: 0.3, transparent: true, opacity: 0.88, side: THREE.DoubleSide })
+  : new THREE.MeshPhysicalMaterial({ color: 0x2a0000, metalness: 0.15, roughness: 0.05, transparent: true, opacity: 0.88, clearcoat: 1.0, clearcoatRoughness: 0.05, side: THREE.DoubleSide });
 export const courtMesh = new THREE.Mesh(courtGeo, courtMat);
 courtMesh.name = 'courtSurface';
 courtMesh.receiveShadow = true;
@@ -83,7 +80,7 @@ scene.add(courtGroup);
 // NOTE: /assets/stagslogoT.png must be a real PNG in public/assets/.
 // MeshBasicMaterial renders regardless of lighting — no emissive needed.
 const logoTexture = new THREE.TextureLoader().load('/assets/stagslogoT.png');
-logoTexture.anisotropy = 16;
+logoTexture.anisotropy = isMobile ? 4 : 16;
 logoTexture.colorSpace = THREE.SRGBColorSpace;
 
 export const logoMaterial = new THREE.MeshBasicMaterial({
@@ -115,7 +112,7 @@ function createCourtText(text, fontSize, color, w, h, spacing) {
   ctx.letterSpacing = spacing || '6.6px';
   ctx.fillText(text, w / 2, h / 2);
   const tex = new THREE.CanvasTexture(c);
-  tex.anisotropy = 16;
+  tex.anisotropy = isMobile ? 4 : 16;
   return tex;
 }
 

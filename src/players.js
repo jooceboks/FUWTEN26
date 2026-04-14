@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { scene } from './scene.js';
+import { scene, isMobile } from './scene.js';
 import { players } from './data.js';
 
 export const ballGroup = new THREE.Group();
@@ -47,12 +47,12 @@ players.forEach((player, i) => {
   const pos = ballPositions[i];
 
   const ball = new THREE.Mesh(
-    new THREE.SphereGeometry(0.55, 32, 32),
+    new THREE.SphereGeometry(0.55, isMobile ? 16 : 32, isMobile ? 16 : 32),
     new THREE.MeshStandardMaterial({ map: ballTexture, roughness: 0.8, metalness: 0.05 })
   );
   ball.name = `ball_${i}_${player.name}`;
   ball.position.set(pos.x, pos.y, pos.z);
-  ball.castShadow = true;
+  ball.castShadow = !isMobile;
   ball.userData = { type: 'player', index: i, ...player, baseY: pos.y, phase: Math.random() * Math.PI * 2 };
   ballGroup.add(ball);
 

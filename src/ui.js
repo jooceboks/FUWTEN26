@@ -332,6 +332,42 @@ style.textContent = `
     justify-content: center; font-size: 14px; transition: all 0.2s;
   }
   #modal-close:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+  /* ── MOBILE OVERRIDES ── */
+  @media (max-width: 640px) {
+    #hero-header {
+      top: 16px; width: 90vw;
+    }
+    #hero-header h1 {
+      font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.7);
+    }
+    #hero-header h2 {
+      font-size: 32px; letter-spacing: 3px;
+    }
+    #hero-header p {
+      font-size: 12px; color: rgba(255,255,255,0.6); letter-spacing: 1.5px;
+    }
+    #instructions {
+      bottom: 32px; width: 88vw;
+    }
+    #instructions span {
+      font-size: 13px; letter-spacing: 0.5px; color: rgba(255,255,255,0.65);
+      padding: 10px 18px; line-height: 1.5;
+    }
+    #audio-toggle {
+      bottom: 32px; right: 16px; width: 44px; height: 44px; font-size: 18px;
+    }
+    #modal-card {
+      width: 92%; padding: 24px 20px; border-radius: 16px;
+    }
+    #modal-card h3 { font-size: 20px; }
+    #modal-card .modal-note { font-size: 13px; }
+    #modal-card .modal-badge { font-size: 10px; }
+    #gallery-panel { width: 100vw; max-width: 100vw; }
+    #carousel-prev { left: -46px; }
+    #carousel-next { right: -46px; }
+    .carousel-arrow { width: 36px; height: 36px; font-size: 16px; }
+  }
 `;
 document.head.appendChild(style);
 

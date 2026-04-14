@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { scene, camera, renderer, controls, clock } from './src/scene.js';
+import { scene, camera, renderer, controls, clock, isMobile } from './src/scene.js';
 import { courtGroup, glowMat, logoMaterial, fuMat, wtenMat, particles, PARTICLE_COUNT } from './src/court.js';
 import { ballGroup, hoverScaleTarget } from './src/players.js';
 import { buildTrophy, buildJacket, buildRacket, build3DCamera, buildPlaque, buildRing } from './src/props.js';
@@ -19,6 +19,14 @@ const racket     = buildRacket(clickableObjects);
 const camera3D   = build3DCamera(clickableObjects);
 const creatorPlaque = buildPlaque(clickableObjects);
 const ring          = buildRing(clickableObjects);
+
+// ─── CACHE SUB-MESH REFS (avoid getObjectByName in render loop) ───
+const trophyStarMesh = trophy.getObjectByName('trophyStar');
+const cameraRedDotMesh = camera3D.getObjectByName('cameraRedDot');
+const ringGemMesh = ring.getObjectByName('ringGem');
+
+// ─── HOISTED VEC3 (avoid per-frame allocation) ───
+const _camera3DBase = new THREE.Vector3(10, 0, -3);
 
 // Register balls as clickable (already added to scene in players.js)
 ballGroup.children.forEach(c => {
@@ -305,9 +313,7 @@ function animate() {
 
   // ── Props animation ──
   trophy.rotation.y = Math.sin(time * 0.5) * 0.15;
-  trophy.children.forEach(c => {
-    if (c.name === 'trophyStar') { c.rotation.y = time * 2; c.rotation.x = time * 1.5; }
-  });
+  if (trophyStarMesh) { trophyStarMesh.rotation.y = time * 2; trophyStarMesh.rotation.x = time * 1.5; }
 
   jacket.rotation.y = Math.sin(time * 0.4 + 1) * 0.1;
 
@@ -315,26 +321,23 @@ function animate() {
   creatorPlaque.rotation.y = Math.sin(time * 0.5) * 0.08;
   ring.position.y = 1.5 + Math.sin(time * 1.1 + 1) * 0.1;
   ring.rotation.y = time * 0.4;
-  ring.children.forEach(c => {
-    if (c.name === 'ringGem') {
-      c.rotation.y = time * 3;
-      c.rotation.x = time * 2;
-      c.material.emissiveIntensity = 0.5 + Math.abs(Math.sin(time * 4)) * 0.8;
-    }
-  });
+  if (ringGemMesh) {
+    ringGemMesh.rotation.y = time * 3;
+    ringGemMesh.rotation.x = time * 2;
+    ringGemMesh.material.emissiveIntensity = 0.5 + Math.abs(Math.sin(time * 4)) * 0.8;
+  }
 
   racket.position.y = 1.2 + Math.sin(time * 0.9) * 0.25;
   racket.rotation.y = -0.3 + Math.sin(time * 0.6) * 0.2;
   racket.rotation.z = 0.15 + Math.sin(time * 0.7 + 0.5) * 0.05;
 
   camera3D.position.y = 1.5 + Math.sin(time * 0.8 + 1.5) * 0.2;
-  _dirToCenter.set(0,0,0).sub(new THREE.Vector3(10,0,-3)).normalize();
+  _dirToCenter.set(0,0,0).sub(_camera3DBase).normalize();
   camera3D.rotation.y = Math.atan2(_dirToCenter.x, _dirToCenter.z) + Math.sin(time * 0.4 + 0.8) * 0.08;
-  const redDot = camera3D.getObjectByName('cameraRedDot');
-  if (redDot) {
+  if (cameraRedDotMesh) {
     const pulse = Math.sin(time * 3) > 0 ? 1.0 : 0.2;
-    redDot.material.emissiveIntensity = pulse;
-    redDot.scale.setScalar(0.8 + pulse * 0.4);
+    cameraRedDotMesh.material.emissiveIntensity = pulse;
+    cameraRedDotMesh.scale.setScalar(0.8 + pulse * 0.4);
   }
 
   // ── Particles ──
@@ -374,4 +377,13 @@ function animate() {
   renderer.render(scene, camera);
 }
 
-renderer.setAnimationLoop(animate);
+// On mobile cap to ~30fps to reduce GPU/battery load
+if (isMobile) {
+  const targetInterval = 1000 / 30;
+  let lastTime = 0;
+  renderer.setAnimationLoop((ts) => {
+    if (ts - lastTime >= targetInterval) { lastTime = ts; animate(); }
+  });
+} else {
+  renderer.setAnimationLoop(animate);
+}
