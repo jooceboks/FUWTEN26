@@ -1,5 +1,4 @@
-import { highlightMedia } from './data.js';
-import { getAmbientAudio } from './audio.js';
+import { carouselPhotos, carouselVideos } from './data.js';
 
 // ─── CSS ───
 const style = document.createElement('style');
@@ -206,6 +205,73 @@ style.textContent = `
     font-size: 13px; color: rgba(255,255,255,0.5); letter-spacing: 1px;
     text-align: center; max-width: 80vw;
   }
+  /* ── CAROUSEL ── */
+  #carousel-overlay {
+    position: fixed; inset: 0; z-index: 400; background: rgba(0,0,0,0.92);
+    display: none; flex-direction: column; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.35s;
+  }
+  #carousel-overlay.active { display: flex; opacity: 1; }
+  #carousel-track {
+    position: relative; width: 90vw; max-width: 800px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #carousel-img {
+    width: 100%; max-height: 72vh; object-fit: contain;
+    border-radius: 14px; box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+    transition: opacity 0.25s;
+  }
+  .carousel-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 46px; height: 46px; border-radius: 50%; border: none; cursor: pointer;
+    background: rgba(204,16,46,0.75); color: #fff; font-size: 20px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, transform 0.2s; z-index: 2; flex-shrink: 0;
+  }
+  .carousel-arrow:hover { background: rgba(204,16,46,1); transform: translateY(-50%) scale(1.08); }
+  #carousel-prev { left: -60px; }
+  #carousel-next { right: -60px; }
+  .carousel-arrow.hidden { opacity: 0; pointer-events: none; }
+  #carousel-footer {
+    margin-top: 20px; text-align: center;
+  }
+  #carousel-caption {
+    font-size: 14px; color: rgba(255,255,255,0.65); letter-spacing: 0.8px;
+    margin-bottom: 10px;
+  }
+  #carousel-dots { display: flex; gap: 8px; justify-content: center; }
+  .carousel-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.25); cursor: pointer; transition: background 0.2s, transform 0.2s;
+  }
+  .carousel-dot.active { background: #cc102e; transform: scale(1.3); }
+  #carousel-close {
+    position: absolute; top: 20px; right: 20px; width: 40px; height: 40px;
+    border-radius: 50%; border: none; cursor: pointer;
+    background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7);
+    font-size: 18px; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; z-index: 5;
+  }
+  #carousel-close:hover { background: rgba(255,255,255,0.2); color: #fff; }
+  #carousel-counter {
+    font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 2px;
+    margin-top: 6px; text-transform: uppercase;
+  }
+  #carousel-tabs {
+    display: flex; gap: 8px; margin-bottom: 20px;
+  }
+  .carousel-tab {
+    padding: 8px 22px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.15);
+    background: transparent; color: rgba(255,255,255,0.45); font-size: 13px;
+    font-family: 'Inter', sans-serif; font-weight: 600; cursor: pointer;
+    letter-spacing: 0.5px; transition: all 0.2s;
+  }
+  .carousel-tab:hover { color: rgba(255,255,255,0.75); border-color: rgba(255,255,255,0.3); }
+  .carousel-tab.active { background: #cc102e; border-color: #cc102e; color: #fff; }
+  #carousel-media {
+    width: 100%; display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.25s; min-height: 200px;
+  }
 
   #modal-overlay {
     position: fixed; inset: 0; z-index: 100; display: none; align-items: center;
@@ -291,18 +357,6 @@ instrSpan.textContent = "Click a tennis ball, trophy, jacket, racket, camera, or
 instDiv.appendChild(instrSpan);
 document.body.appendChild(instDiv);
 
-// ─── AUDIO TOGGLE ───
-export const audioBtn = document.createElement('button');
-audioBtn.id = 'audio-toggle';
-audioBtn.textContent = '🔊';
-let audioMuted = false;
-audioBtn.addEventListener('click', () => {
-  audioMuted = !audioMuted;
-  audioBtn.textContent = audioMuted ? '🔇' : '🔊';
-  const ambient = getAmbientAudio();
-  if (ambient) ambient.volume = audioMuted ? 0 : 0.25;
-});
-document.body.appendChild(audioBtn);
 
 // ─── GALLERY PANEL ───
 const memoriesBtn = document.createElement('button');
@@ -383,79 +437,144 @@ function makeEl(tag, props = {}, text = '') {
   return el;
 }
 
-const teamCard = makeEl('div', { className: 'gallery-team-card' });
-const tce = makeEl('div', { className: 'team-emoji' }, '🎬🦌🏆');
-const tct = makeEl('div', { className: 'team-text' });
-tct.append(
-  document.createTextNode('The moments that made this season unforgettable.'),
-  document.createElement('br'),
-  Object.assign(makeEl('strong'), { textContent: 'Add your videos & photos below.' }),
-  document.createElement('br'),
-  document.createTextNode('Fairfield Stags Tennis 2025–2026')
-);
-teamCard.append(tce, tct);
-galleryScrollDiv.appendChild(teamCard);
+// ─── CAROUSEL ───
+const carouselOverlay = document.createElement('div');
+carouselOverlay.id = 'carousel-overlay';
 
-const videos = highlightMedia.filter(m => m.type === 'video');
-const images = highlightMedia.filter(m => m.type === 'image');
+const carouselCloseBtn = document.createElement('button');
+carouselCloseBtn.id = 'carousel-close';
+carouselCloseBtn.textContent = '✕';
 
-function buildMediaCard(media) {
-  const card = makeEl('div', { className: 'highlight-media-card' });
-  if (media.type === 'video') {
-    const wrap = makeEl('div', { style: 'position:relative;' });
-    const vid = makeEl('video', { src: media.src, muted: true, preload: 'metadata' });
-    vid.style.cssText = 'width:100%;max-height:200px;object-fit:cover;border-radius:16px 16px 0 0;background:#000;pointer-events:none;';
-    const playOverlay = makeEl('div', { className: 'highlight-play-overlay' });
-    playOverlay.appendChild(makeEl('div', { className: 'highlight-play-btn' }));
-    wrap.append(vid, playOverlay);
-    card.appendChild(wrap);
-  } else {
-    const img = makeEl('img', { src: media.src, alt: media.caption, loading: 'lazy' });
-    card.appendChild(img);
+// Tabs
+const carouselTabs = makeEl('div', { id: 'carousel-tabs' });
+const tabPhotos = makeEl('button', { className: 'carousel-tab active' }, '📸 Photos');
+const tabVideos = makeEl('button', { className: 'carousel-tab' }, '🎬 Videos');
+carouselTabs.append(tabPhotos, tabVideos);
+
+const carouselTrack = document.createElement('div');
+carouselTrack.id = 'carousel-track';
+
+const carouselPrev = document.createElement('button');
+carouselPrev.id = 'carousel-prev';
+carouselPrev.className = 'carousel-arrow';
+carouselPrev.textContent = '‹';
+
+const carouselMedia = makeEl('div', { id: 'carousel-media' });
+
+const carouselNext = document.createElement('button');
+carouselNext.id = 'carousel-next';
+carouselNext.className = 'carousel-arrow';
+carouselNext.textContent = '›';
+
+carouselTrack.append(carouselPrev, carouselMedia, carouselNext);
+
+const carouselFooter = makeEl('div', { id: 'carousel-footer' });
+const carouselCaption = makeEl('div', { id: 'carousel-caption' });
+const carouselDots = makeEl('div', { id: 'carousel-dots' });
+const carouselCounter = makeEl('div', { id: 'carousel-counter' });
+carouselFooter.append(carouselCaption, carouselDots, carouselCounter);
+
+carouselOverlay.append(carouselCloseBtn, carouselTabs, carouselTrack, carouselFooter);
+document.body.appendChild(carouselOverlay);
+
+const photos = carouselPhotos.filter(p => p.src);
+const videos = carouselVideos.filter(v => v.src);
+let carouselMode = 'photos'; // 'photos' | 'videos'
+let carouselIndex = 0;
+
+function currentItems() { return carouselMode === 'photos' ? photos : videos; }
+
+function renderCarousel() {
+  const items = currentItems();
+  if (!items.length) {
+    carouselMedia.textContent = '';
+    const empty = makeEl('div', { style: 'color:rgba(255,255,255,0.4);font-size:14px;text-align:center;padding:40px 0;' },
+      carouselMode === 'photos' ? 'No photos yet' : 'No videos yet');
+    carouselMedia.appendChild(empty);
+    carouselCaption.textContent = '';
+    carouselCounter.textContent = '';
+    carouselDots.textContent = '';
+    carouselPrev.classList.add('hidden');
+    carouselNext.classList.add('hidden');
+    return;
   }
-  const info = makeEl('div', { className: 'highlight-media-info' });
-  const badge = makeEl('span', { className: `media-type-badge ${media.type === 'video' ? 'video-badge' : 'photo-badge'}` },
-    media.type === 'video' ? 'VIDEO' : 'PHOTO');
-  const caption = makeEl('span', { className: 'media-caption' }, media.caption);
-  info.append(badge, caption);
-  card.appendChild(info);
-  card.addEventListener('click', () => openLightbox(media));
-  return card;
+  const item = items[carouselIndex];
+  carouselMedia.style.opacity = '0';
+  setTimeout(() => {
+    carouselMedia.textContent = '';
+    if (carouselMode === 'videos') {
+      const vid = document.createElement('video');
+      vid.src = item.src; vid.controls = true; vid.playsInline = true;
+      vid.style.cssText = 'width:100%;max-height:65vh;border-radius:14px;background:#000;box-shadow:0 24px 80px rgba(0,0,0,0.7);';
+      carouselMedia.appendChild(vid);
+    } else {
+      const img = document.createElement('img');
+      img.src = item.src; img.alt = item.caption;
+      img.style.cssText = 'width:100%;max-height:65vh;object-fit:contain;border-radius:14px;box-shadow:0 24px 80px rgba(0,0,0,0.7);';
+      carouselMedia.appendChild(img);
+    }
+    carouselCaption.textContent = item.caption;
+    carouselCounter.textContent = `${carouselIndex + 1} / ${items.length}`;
+    carouselMedia.style.opacity = '1';
+  }, 150);
+  carouselPrev.classList.toggle('hidden', items.length <= 1);
+  carouselNext.classList.toggle('hidden', items.length <= 1);
+  carouselDots.textContent = '';
+  items.forEach((_, i) => {
+    const dot = makeEl('div', { className: 'carousel-dot' + (i === carouselIndex ? ' active' : '') });
+    dot.addEventListener('click', () => { carouselIndex = i; renderCarousel(); });
+    carouselDots.appendChild(dot);
+  });
 }
 
-function buildSlot(media) {
-  const slot = makeEl('div', { className: 'highlight-empty-slot' });
-  slot.append(
-    makeEl('div', { className: 'slot-icon' }, media.type === 'video' ? '🎥' : '📸'),
-    makeEl('div', { className: 'slot-text' }, media.caption),
-    makeEl('div', { className: 'slot-hint' }, 'Add URL to highlightMedia array in src/data.js')
-  );
-  return slot;
+function switchTab(mode) {
+  carouselMode = mode;
+  carouselIndex = 0;
+  tabPhotos.classList.toggle('active', mode === 'photos');
+  tabVideos.classList.toggle('active', mode === 'videos');
+  // pause any playing video when switching
+  const vid = carouselMedia.querySelector('video');
+  if (vid) vid.pause();
+  renderCarousel();
 }
 
-if (videos.length) {
-  galleryScrollDiv.appendChild(makeEl('div', { className: 'highlight-section-label' }, '▶ VIDEOS'));
-  videos.forEach(m => galleryScrollDiv.appendChild(m.src ? buildMediaCard(m) : buildSlot(m)));
-}
-if (images.length) {
-  galleryScrollDiv.appendChild(makeEl('div', { className: 'highlight-section-label' }, '📷 PHOTOS'));
-  images.forEach(m => galleryScrollDiv.appendChild(m.src ? buildMediaCard(m) : buildSlot(m)));
+tabPhotos.addEventListener('click', () => switchTab('photos'));
+tabVideos.addEventListener('click', () => switchTab('videos'));
+
+export function openCarousel() {
+  carouselMode = 'photos';
+  carouselIndex = 0;
+  tabPhotos.classList.add('active');
+  tabVideos.classList.remove('active');
+  renderCarousel();
+  carouselOverlay.classList.add('active');
 }
 
-const highlightsCard = makeEl('div', { className: 'gallery-team-card' });
-const hce = makeEl('div', { className: 'team-emoji' }, '⭐');
-const hct = makeEl('div', { className: 'team-text' });
-hct.append(
-  Object.assign(makeEl('strong'), { textContent: 'Season Highlights' }),
-  document.createElement('br'),
-  document.createTextNode('Conference Champions · 42-8 Record'),
-  document.createElement('br'),
-  document.createTextNode('12 All-Conference Selections'),
-  document.createElement('br'),
-  document.createTextNode('Undefeated Home Record')
-);
-highlightsCard.append(hce, hct);
-galleryScrollDiv.appendChild(highlightsCard);
+function closeCarousel() {
+  const vid = carouselMedia.querySelector('video');
+  if (vid) vid.pause();
+  carouselOverlay.classList.remove('active');
+}
+
+carouselCloseBtn.addEventListener('click', closeCarousel);
+carouselOverlay.addEventListener('click', (e) => { if (e.target === carouselOverlay) closeCarousel(); });
+carouselPrev.addEventListener('click', () => {
+  const items = currentItems();
+  carouselIndex = (carouselIndex - 1 + items.length) % items.length;
+  renderCarousel();
+});
+carouselNext.addEventListener('click', () => {
+  const items = currentItems();
+  carouselIndex = (carouselIndex + 1) % items.length;
+  renderCarousel();
+});
+document.addEventListener('keydown', (e) => {
+  if (!carouselOverlay.classList.contains('active')) return;
+  const items = currentItems();
+  if (e.key === 'ArrowLeft')  { carouselIndex = (carouselIndex - 1 + items.length) % items.length; renderCarousel(); }
+  if (e.key === 'ArrowRight') { carouselIndex = (carouselIndex + 1) % items.length; renderCarousel(); }
+  if (e.key === 'Escape') closeCarousel();
+});
 
 // ─── MODAL ───
 export const modalOverlay = makeEl('div', { id: 'modal-overlay' });

@@ -58,16 +58,16 @@ export const upcoming = [
   { date: 'Apr 25–26', opp: 'MAAC Championships — Princeton, NJ' },
 ];
 
-// ─── HIGHLIGHT REEL ───
-// Add src URLs to show media. Leave src empty for placeholder slots.
-export const highlightMedia = [
-  { type: 'video', src: '', caption: 'Match Day Highlights — Spring 2026' },
-  { type: 'video', src: '', caption: 'Conference Championship — Final Set' },
-  { type: 'video', src: '', caption: 'Senior Day Ceremony' },
-  { type: 'image', src: '', caption: 'Team Photo — Conference Champions' },
-  { type: 'image', src: '', caption: 'Post-Match Celebration' },
-  { type: 'image', src: '', caption: 'Practice at Walsh Courts' },
-  { type: 'image', src: '', caption: 'Senior Night Group Shot' },
-  { type: 'image', src: '', caption: 'Bus Ride Memories' },
-  { type: 'image', src: '', caption: 'Awards Banquet' },
+// ─── CAROUSEL PHOTOS ───
+// Photos shown in the camera lens carousel. Add more as needed.
+export const carouselPhotos = [
+  { src: '/assets/team_photo_2.jpg', caption: 'Team Shoot — 2025–26' },
+  { src: '/assets/team_photo_1.jpg', caption: 'Team Photo — Spring 2026' },
+  { src: '/assets/team_photo_3.jpg', caption: 'Post-Match — Spring 2026' },
+];
+
+// ─── CAROUSEL VIDEOS ───
+// Videos shown in the camera lens carousel. Add more as needed.
+export const carouselVideos = [
+  { src: '/assets/highlight_1.mov', caption: 'Highlights — Spring 2026' },
 ];

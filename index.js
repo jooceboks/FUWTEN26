@@ -2,11 +2,10 @@ import * as THREE from 'three';
 import { scene, camera, renderer, controls, clock } from './src/scene.js';
 import { courtGroup, glowMat, logoMaterial, fuMat, wtenMat, particles, PARTICLE_COUNT } from './src/court.js';
 import { ballGroup, hoverScaleTarget } from './src/players.js';
-import { initAudio, playHitSound } from './src/audio.js';
 import { buildTrophy, buildJacket, buildRacket, build3DCamera, buildPlaque } from './src/props.js';
 import { playerImages, results, upcoming } from './src/data.js';
 import {
-  header, instDiv, audioBtn, toggleGallery,
+  header, instDiv, toggleGallery, openCarousel,
   modalOverlay, modalBadge, modalTitle, modalNumber, modalNote, modalImageWrap, modalCloseBtn,
 } from './src/ui.js';
 
@@ -164,6 +163,13 @@ function openModal(data) {
     modalBadge.textContent = 'CREATOR NOTE';
     modalTitle.textContent = 'A Message from Sliu';
     modalTitle.style.cssText = 'background:linear-gradient(135deg,#fff,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:21.6px;font-weight:700;white-space:nowrap;margin-bottom:6px;';
+    modalImageWrap.style.display = 'block';
+    modalImageWrap.innerHTML = '';
+    const creatorImg = document.createElement('img');
+    creatorImg.src = '/assets/creator.jpg';
+    creatorImg.alt = 'Sarah Liu';
+    creatorImg.style.cssText = 'width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:12px;display:block;';
+    modalImageWrap.appendChild(creatorImg);
     modalNote.innerHTML = '<span style="color:rgba(255,255,255,0.92);line-height:1.6;display:block;">To my 2025\u20132026 team: Building this was my way of bottling up the energy, the late-night bus rides, and the absolute grind we shared on these courts. I wanted to create something as permanent as the memories we made. As I graduate, I\u2019m leaving a piece of this court behind with you. Roll Stags!</span><div class="modal-creator-signature" style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,215,0,0.15);text-align:right;"><span style="font-family:Georgia,serif;font-style:italic;font-size:18px;color:rgba(255,215,0,0.7);letter-spacing:1px;">Sarah Liu \'26 \uD83C\uDF93</span></div>';
   }
 
@@ -220,8 +226,6 @@ renderer.domElement.addEventListener('mousemove', (e) => {
 
 renderer.domElement.addEventListener('click', async (e) => {
   if (modalOpen || cameraAnimating || introActive) return;
-  await initAudio();
-
   mouse.x =  (e.clientX / window.innerWidth)  * 2 - 1;
   mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
   raycaster.setFromCamera(mouse, camera);
@@ -231,9 +235,7 @@ renderer.domElement.addEventListener('click', async (e) => {
   const obj  = hits[0].object;
   const data = obj.userData;
   if (!data.type) return;
-  playHitSound();
-
-  if (data.type === 'camera3d') { toggleGallery(); return; }
+  if (data.type === 'camera3d') { openCarousel(); return; }
 
   let camPos, targetLook;
   if      (data.type === 'player')  { camPos = new THREE.Vector3(obj.position.x+2.5, obj.position.y+1.5, obj.position.z+3); targetLook = obj.position.clone(); }
@@ -245,7 +247,6 @@ renderer.domElement.addEventListener('click', async (e) => {
   animateCameraTo(camPos, targetLook, () => openModal(data));
 });
 
-document.addEventListener('click', () => initAudio(), { once: true });
 
 // ─── ANIMATE ───
 // Hoisted to avoid per-frame allocations (perf fix 4)
@@ -264,7 +265,7 @@ function animate() {
       controls.target.copy(introTargetEnd);
       header.classList.add('visible');
       instDiv.classList.add('visible');
-      audioBtn.classList.add('visible');
+
     } else {
       const t = easeInOutCubic(introProgress);
       camera.position.lerpVectors(introStart, introEnd, t);
