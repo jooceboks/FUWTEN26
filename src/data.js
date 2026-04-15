@@ -72,15 +72,14 @@ export const carouselPhotos = [
 
 // ─── CAROUSEL VIDEOS ───
 // Videos shown in the camera lens carousel. Add more as needed.
-const VIDEOS_BASE = 'https://github.com/jooceboks/FUWTEN26/releases/download/highlightvids';
+const VIDEOS_BASE = 'https://github.com/jooceboks/FUWTEN26/releases/download/highlightvids-mp4';
 
 export const carouselVideos = [
-  { src: `${VIDEOS_BASE}/highlight_1.mov`,                                  caption: 'Cheer :D' },
-  { src: `${VIDEOS_BASE}/match_highlights.mov`,                             caption: 'Hey team !' },
-  { src: `${VIDEOS_BASE}/5AA7676B-4343-454F-81DC-DD41799DB2E6.MOV`,         caption: 'Texas Roadhouse POV1' },
-  { src: `${VIDEOS_BASE}/2AB322DA-D58B-4D79-B856-59D44FDAB863.MOV`,         caption: 'Texas Roadhouse POV2' },
-  { src: `${VIDEOS_BASE}/5633E74D-9031-47E3-BD6C-B5C2DEDD2C2F.MOV`,         caption: 'Fall 25' },
-  { src: `${VIDEOS_BASE}/team_handstack.mov`,                               caption: 'Bus1' },
-  { src: `${VIDEOS_BASE}/team_night_out.mov`,                               caption: 'Bus2' },
-  { src: `${VIDEOS_BASE}/A39C18F9-5651-4740-BCBD-453066B86304.MOV`,         caption: 'Fall 25' },
+  { src: `${VIDEOS_BASE}/highlight_1.mp4`,                                  caption: 'Cheer :D' },
+  { src: `${VIDEOS_BASE}/match_highlights.mp4`,                             caption: 'Hey team !' },
+  { src: `${VIDEOS_BASE}/5AA7676B-4343-454F-81DC-DD41799DB2E6.mp4`,         caption: 'Texas Roadhouse POV1' },
+  { src: `${VIDEOS_BASE}/2AB322DA-D58B-4D79-B856-59D44FDAB863.mp4`,         caption: 'Texas Roadhouse POV2' },
+  { src: `${VIDEOS_BASE}/5633E74D-9031-47E3-BD6C-B5C2DEDD2C2F.mp4`,         caption: 'Fall 25' },
+  { src: `${VIDEOS_BASE}/team_night_out.mp4`,                               caption: 'Bus2' },
+  { src: `${VIDEOS_BASE}/A39C18F9-5651-4740-BCBD-453066B86304.mp4`,         caption: 'Fall 25' },
 ];
