@@ -72,7 +72,7 @@ export const carouselPhotos = [
 
 // ─── CAROUSEL VIDEOS ───
 // Videos shown in the camera lens carousel. Add more as needed.
-const VIDEOS_BASE = 'https://github.com/jooceboks/FUWTEN26/releases/download/highlightvids-mp4';
+const VIDEOS_BASE = 'https://github.com/jooceboks/FUWTEN26/releases/download/highlightvids';
 
 export const carouselVideos = [
   { src: `${VIDEOS_BASE}/highlight_1.mp4`,                                  caption: 'Cheer :D' },
