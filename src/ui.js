@@ -55,17 +55,6 @@ style.textContent = `
     font-size: 11px; color: rgba(255,215,0,0.6); font-style: italic; text-align: right;
   }
 
-  #audio-toggle {
-    position: fixed; bottom: 20px; right: 20px; z-index: 20;
-    width: 40px; height: 40px; border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.06);
-    backdrop-filter: blur(10px); cursor: pointer; display: flex;
-    align-items: center; justify-content: center;
-    color: rgba(255,255,255,0.5); font-size: 16px; transition: all 0.3s; opacity: 0;
-  }
-  #audio-toggle.visible { opacity: 1; }
-  #audio-toggle:hover { background: rgba(255,255,255,0.12); color: #fff; }
-
   #memories-btn { display: none; }
 
   #gallery-panel {

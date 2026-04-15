@@ -1,7 +1,3 @@
-// ─── AUDIO ───
-export const HIT_SFX_URL = 'https://rrzvgzjttmyseqsmmyvn.supabase.co/storage/v1/object/sign/attachments/3228282c-0b5e-4ad1-a13a-b9680cafdfa3/generated-audio/lc9j6h2psxs-1776101497261-8mra.mp3?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xMjY1MWQ4My04ODE0LTQ3NzMtOGRlNS00MzliNDBkODY2NmYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJhdHRhY2htZW50cy8zMjI4MjgyYy0wYjVlLTRhZDEtYTEzYS1iOTY4MGNhZmRmYTMvZ2VuZXJhdGVkLWF1ZGlvL2xjOWo2aDJwc3hzLTE3NzYxMDE0OTcyNjEtOG1yYS5tcDMiLCJpYXQiOjE3NzYxMDE0OTcsImV4cCI6MjA5MTQ2MTQ5N30.Cdta-z4JB4e149r90g-FHCDZcw5HFCJLrmdM6ceELtE';
-export const AMBIENT_URL = 'https://rrzvgzjttmyseqsmmyvn.supabase.co/storage/v1/object/sign/attachments/3228282c-0b5e-4ad1-a13a-b9680cafdfa3/generated-audio/lc9j6h2psxs-1776101512184-7u52.mp3?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8xMjY1MWQ4My04ODE0LTQ3NzMtOGRlNS00MzliNDBkODY2NmYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJhdHRhY2htZW50cy8zMjI4MjgyYy0wYjVlLTRhZDEtYTEzYS1iOTY4MGNhZmRmYTMvZ2VuZXJhdGVkLWF1ZGlvL2xjOWo2aDJwc3hzLTE3NzYxMDE1MTIxODQtN3U1Mi5tcDMiLCJpYXQiOjE3NzYxMDE1MTIsImV4cCI6MjA5MTQ2MTUxMn0.b0aJV7gYN-DyN2Lf8R2SzwkpTZQAiJf5Guo91TBqB0A';
-
 // ─── PLAYER IMAGES ───
 // Add /assets/roster/<filename> paths here. File must exist in public/assets/roster/.
 export const playerImages = {
@@ -76,13 +72,15 @@ export const carouselPhotos = [
 
 // ─── CAROUSEL VIDEOS ───
 // Videos shown in the camera lens carousel. Add more as needed.
+const VIDEOS_BASE = 'https://github.com/jooceboks/FUWTEN26/releases/download/highlightvids';
+
 export const carouselVideos = [
-  { src: '/assets/videos/highlight_1.mov',                                  caption: 'Cheer :D' },
-  { src: '/assets/videos/match_highlights.mov',                             caption: 'Hey team !' },
-  { src: '/assets/videos/5AA7676B-4343-454F-81DC-DD41799DB2E6.MOV',         caption: 'Texas Roadhouse POV1' },
-  { src: '/assets/videos/2AB322DA-D58B-4D79-B856-59D44FDAB863.MOV',         caption: 'Texas RoadhousePOV2' },
-  { src: '/assets/videos/5633E74D-9031-47E3-BD6C-B5C2DEDD2C2F.MOV',         caption: 'Fall 25' },
-  { src: '/assets/videos/team_handstack.mov',                               caption: 'Bus1' },
-  { src: '/assets/videos/team_night_out.mov',                               caption: 'Bus2' },
-  { src: '/assets/videos/A39C18F9-5651-4740-BCBD-453066B86304.MOV',         caption: 'Fall 25' },
+  { src: `${VIDEOS_BASE}/highlight_1.mov`,                                  caption: 'Cheer :D' },
+  { src: `${VIDEOS_BASE}/match_highlights.mov`,                             caption: 'Hey team !' },
+  { src: `${VIDEOS_BASE}/5AA7676B-4343-454F-81DC-DD41799DB2E6.MOV`,         caption: 'Texas Roadhouse POV1' },
+  { src: `${VIDEOS_BASE}/2AB322DA-D58B-4D79-B856-59D44FDAB863.MOV`,         caption: 'Texas Roadhouse POV2' },
+  { src: `${VIDEOS_BASE}/5633E74D-9031-47E3-BD6C-B5C2DEDD2C2F.MOV`,         caption: 'Fall 25' },
+  { src: `${VIDEOS_BASE}/team_handstack.mov`,                               caption: 'Bus1' },
+  { src: `${VIDEOS_BASE}/team_night_out.mov`,                               caption: 'Bus2' },
+  { src: `${VIDEOS_BASE}/A39C18F9-5651-4740-BCBD-453066B86304.MOV`,         caption: 'Fall 25' },
 ];
