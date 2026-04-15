@@ -392,7 +392,7 @@ const h1 = document.createElement('h1'); h1.textContent = 'Fairfield University'
 const h2 = document.createElement('h2'); h2.textContent = 'STAGS TENNIS';
 const p1 = document.createElement('p');
 p1.style.marginBottom = '6px';
-p1.textContent = 'More than a season, a permanent memory. An appreciation project for the 2025–2026 Fairfield Stags.';
+p1.innerHTML = 'More than a season, a permanent memory.<br>An appreciation project for the 2025–2026 Fairfield Women\'s Tennis Team.';
 const p2 = document.createElement('p');
 p2.style.cssText = 'font-size:10px;letter-spacing:2px;text-transform:none;font-style:italic;margin-top:4px;background:linear-gradient(135deg,#ffffff,#ffd4d4,#ffffff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;';
 p2.textContent = "Project by Sarah Liu '26";
@@ -403,7 +403,7 @@ document.body.appendChild(header);
 export const instDiv = document.createElement('div');
 instDiv.id = 'instructions';
 const instrSpan = document.createElement('span');
-instrSpan.textContent = "Click a tennis ball, trophy, jacket, racket, camera, or creator's plaque to explore";
+instrSpan.textContent = "Click a tennis ball, trophy, jacket, racket, camera, ring, or creator's plaque to explore";
 instDiv.appendChild(instrSpan);
 document.body.appendChild(instDiv);
 

@@ -114,16 +114,16 @@ function openModal(data) {
   } else if (data.type === 'trophy') {
     modalBadge.textContent = 'CHAMPIONS TROPHY';
     modalTitle.textContent = 'A Symbol of Our Effort';
-    modalNote.innerHTML = '<span style="color:rgba(255,255,255,0.92);line-height:1.6;display:block;">This trophy represents the hard work and effort we poured into every set, but to me, we are winners because of the <strong><span style="color:#C8102E;">people themselves</span></strong>\u2014not just the outcomes of the matches. I truly appreciate having such a supportive team to look back on. You all created a truly incredible senior year for me, and that is the <strong><span style="color:#C8102E;">real win</span></strong>.</span>';
+      modalNote.innerHTML = '<span style="color:rgba(255,255,255,0.92);line-height:1.6;display:block;">This trophy represents all the hard work we poured into every set, every practice, and every moment this season. But honestly, to me, what makes us winners goes way beyond the scores on the board. It is about <strong><span style="color:#C8102E;">who we are</span></strong> as people, how we showed up for each other, and the kind of team we built along the way. Having such a supportive group made this senior year such an incredible experience, and I am so grateful for every single one of you. The team culture you all created is the <strong><span style="color:#C8102E;">real win</span></strong>.</span>';
   } else if (data.type === 'ring') {
     modalBadge.textContent = 'ASSISTANT COACH';
     modalTitle.textContent = 'Daniella Medvedeva';
     modalTitle.style.cssText = 'background:linear-gradient(135deg,#fff,#c0c0c0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:22px;font-weight:700;margin-bottom:6px;';
     modalNote.innerHTML = '<span style="color:rgba(255,255,255,0.92);line-height:1.7;display:block;">' + data.note + '</span>';
   } else if (data.type === 'jacket') {
-    modalBadge.style.display = 'none';
-    modalTitle.textContent = 'The Coaching Staff';
-    modalTitle.style.cssText = 'background:linear-gradient(135deg,#fff,#fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:24px;font-weight:700;margin-bottom:6px;';
+    modalBadge.textContent = 'The Coaching Staff';
+    modalTitle.textContent = '';
+    modalTitle.style.cssText = 'display:none;';
     modalNumber.style.display = 'block';
     modalNumber.innerHTML = '<span style="color:#A2AAAD;font-size:13px;letter-spacing:3px;font-weight:500;">Jeff Bricker \xb7 Chris Pappas \xb7 Ed Paiges</span>';
     modalNote.innerHTML = '<span style="color:rgba(255,255,255,0.82);line-height:1.6;display:block;">To <strong><span style="color:#cc0000;">Jeff Bricker</span></strong>, <strong><span style="color:#cc0000;">Chris Pappas</span></strong>, and <strong><span style="color:#cc0000;">Ed Paiges</span></strong>: Thank you for the countless unseen efforts, the life lessons beyond the court, and for being the steady foundation of this team. Your impact reaches far beyond the game.</span>';
@@ -180,7 +180,7 @@ function openModal(data) {
     modalImageWrap.style.display = 'block';
     modalImageWrap.innerHTML = '';
     const creatorImg = document.createElement('img');
-    creatorImg.src = '/assets/creator.jpg';
+    creatorImg.src = '/assets/creator.png';
     creatorImg.alt = 'Sarah Liu';
     creatorImg.style.cssText = 'width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:12px;display:block;';
     modalImageWrap.appendChild(creatorImg);

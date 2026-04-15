@@ -225,7 +225,7 @@ export function buildRing(clickableObjects) {
   group.scale.setScalar(0.65);
   group.position.set(-8.5, 1.5, 1.2);
   group.userData = { type: 'ring', title: 'Assistant Coach', name: 'Daniella Medvedeva',
-    note: 'Dani, you\'ve done so much for the girls and gone truly above and beyond for this team. I truly appreciate your 2 years here with us. You\'ve done the absolute most for every one of us and we\'re so lucky to have had you. You really are the goat for everything you\'ve poured into this program — thank you for being the best coach and mentor we could\'ve asked for!' };
+    note: 'Dani, you\'ve done so much for the girls and gone truly above and beyond for this team. I truly appreciate your 2 years here with us. You\'ve done the absolute most for every one of us and we\'re so lucky to have had you. You really are the goat for everything you\'ve poured into this program. Thank you for being here.' };
   group.traverse(c => { if (c.isMesh) { c.userData = group.userData; clickableObjects.push(c); } });
 
   const rl = new THREE.PointLight(0xbbccff, 0.8, 8);

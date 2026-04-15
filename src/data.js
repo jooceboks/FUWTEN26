@@ -49,10 +49,10 @@ export const results = [
   { date: 'Mar 29', opp: 'Merrimack',       result: 'W', score: '7–0', maac: true  },
   { date: 'Apr 2',  opp: 'Sacred Heart',    result: 'L', score: '2–5', maac: true  },
   { date: 'Apr 9',  opp: 'Marist',          result: 'W', score: '5–2', maac: true  },
+  { date: 'Apr 12',  opp: 'Mount St. Mary\'s',          result: 'L', score: '2–5', maac: true  },
 ];
 
 export const upcoming = [
-  { date: 'Apr 12', opp: 'at Mount St. Mary\'s' },
   { date: 'Apr 15', opp: 'at Quinnipiac'         },
   { date: 'Apr 19', opp: 'vs Niagara'            },
   { date: 'Apr 25–26', opp: 'MAAC Championships — Princeton, NJ' },
@@ -61,13 +61,28 @@ export const upcoming = [
 // ─── CAROUSEL PHOTOS ───
 // Photos shown in the camera lens carousel. Add more as needed.
 export const carouselPhotos = [
-  { src: '/assets/team_photo_2.jpg', caption: 'Team Shoot — 2025–26' },
-  { src: '/assets/team_photo_1.jpg', caption: 'Team Photo — Spring 2026' },
-  { src: '/assets/team_photo_3.jpg', caption: 'Post-Match — Spring 2026' },
+  { src: '/assets/picures/team_photo_2.jpg',       caption: 'Team Shoot 25-26' },
+  { src: '/assets/picures/team_photo_1.jpg',       caption: 'Spring 2026' },
+  { src: '/assets/picures/team_photo_3.jpg',       caption: 'USTA Spring 2026' },
+  { src: '/assets/picures/courtside_sunset_1.jpg', caption: 'M1' },
+  { src: '/assets/picures/courtside_sunset_2.jpg', caption: 'M2' },
+  { src: '/assets/picures/warmup_sunset.jpg',      caption: 'M3' },
+  { src: '/assets/picures/team_warmup_dusk.jpg',   caption: 'M4' },
+  { src: '/assets/picures/van_ride.jpg',           caption: 'Road Trip Vibes' },
+  { src: '/assets/picures/team_dinner.jpg',        caption: 'Team Dinner' },
+  { src: '/assets/picures/pregame_wait.jpg',       caption: 'Pre-Match Fall 2025' },
+  { src: '/assets/picures/team_outdoor_1.jpg',     caption: 'ARMY 2025' },
 ];
 
 // ─── CAROUSEL VIDEOS ───
 // Videos shown in the camera lens carousel. Add more as needed.
 export const carouselVideos = [
-  { src: '/assets/highlight_1.mov', caption: 'Highlights — Spring 2026' },
+  { src: '/assets/videos/highlight_1.mov',                                  caption: 'Cheer :D' },
+  { src: '/assets/videos/match_highlights.mov',                             caption: 'Hey team !' },
+  { src: '/assets/videos/5AA7676B-4343-454F-81DC-DD41799DB2E6.MOV',         caption: 'Texas Roadhouse POV1' },
+  { src: '/assets/videos/2AB322DA-D58B-4D79-B856-59D44FDAB863.MOV',         caption: 'Texas RoadhousePOV2' },
+  { src: '/assets/videos/5633E74D-9031-47E3-BD6C-B5C2DEDD2C2F.MOV',         caption: 'Fall 25' },
+  { src: '/assets/videos/team_handstack.mov',                               caption: 'Bus1' },
+  { src: '/assets/videos/team_night_out.mov',                               caption: 'Bus2' },
+  { src: '/assets/videos/A39C18F9-5651-4740-BCBD-453066B86304.MOV',         caption: 'Fall 25' },
 ];
