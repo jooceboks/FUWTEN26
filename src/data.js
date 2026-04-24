@@ -59,14 +59,14 @@ export const upcoming = [
 export const carouselPhotos = [
   { src: '/assets/picures/team_photo_2.jpg',       caption: 'Team Shoot 25-26' },
   { src: '/assets/picures/team_photo_1.jpg',       caption: 'Spring 2026' },
-  { src: '/assets/picures/team_photo_3.jpg',       caption: 'USTA Spring 2026' },
-  { src: '/assets/picures/courtside_sunset_1.jpg', caption: 'M1' },
-  { src: '/assets/picures/courtside_sunset_2.jpg', caption: 'M2' },
-  { src: '/assets/picures/warmup_sunset.jpg',      caption: 'M3' },
-  { src: '/assets/picures/team_warmup_dusk.jpg',   caption: 'M4' },
-  { src: '/assets/picures/van_ride.jpg',           caption: 'Road Trip Vibes' },
-  { src: '/assets/picures/team_dinner.jpg',        caption: 'Team Dinner' },
-  { src: '/assets/picures/pregame_wait.jpg',       caption: 'Pre-Match Fall 2025' },
+  // { src: '/assets/picures/team_photo_3.jpg',       caption: 'USTA Spring 2026' },
+  // { src: '/assets/picures/courtside_sunset_1.jpg', caption: 'M1' },
+  // { src: '/assets/picures/courtside_sunset_2.jpg', caption: 'M2' },
+  // { src: '/assets/picures/warmup_sunset.jpg',      caption: 'M3' },
+  // { src: '/assets/picures/team_warmup_dusk.jpg',   caption: 'M4' },
+  // { src: '/assets/picures/van_ride.jpg',           caption: 'Road Trip Vibes' },
+  // { src: '/assets/picures/team_dinner.jpg',        caption: 'Team Dinner' },
+  // { src: '/assets/picures/pregame_wait.jpg',       caption: 'Pre-Match Fall 2025' },
   { src: '/assets/picures/team_outdoor_1.jpg',     caption: 'ARMY 2025' },
 ];
 
@@ -77,9 +77,9 @@ const VIDEOS_BASE = 'https://github.com/jooceboks/FUWTEN26/releases/download/hig
 export const carouselVideos = [
   { src: `${VIDEOS_BASE}/highlight_1.mp4`,                                  caption: 'Cheer :D' },
   { src: `${VIDEOS_BASE}/match_highlights.mp4`,                             caption: 'Hey team !' },
-  { src: `${VIDEOS_BASE}/5AA7676B-4343-454F-81DC-DD41799DB2E6.mp4`,         caption: 'Texas Roadhouse POV1' },
-  { src: `${VIDEOS_BASE}/2AB322DA-D58B-4D79-B856-59D44FDAB863.mp4`,         caption: 'Texas Roadhouse POV2' },
-  { src: `${VIDEOS_BASE}/5633E74D-9031-47E3-BD6C-B5C2DEDD2C2F.mp4`,         caption: 'Fall 25' },
-  { src: `${VIDEOS_BASE}/team_night_out.mp4`,                               caption: 'Bus2' },
-  { src: `${VIDEOS_BASE}/A39C18F9-5651-4740-BCBD-453066B86304.mp4`,         caption: 'Fall 25' },
+  // { src: `${VIDEOS_BASE}/5AA7676B-4343-454F-81DC-DD41799DB2E6.mp4`,         caption: 'Texas Roadhouse POV1' },
+  // { src: `${VIDEOS_BASE}/2AB322DA-D58B-4D79-B856-59D44FDAB863.mp4`,         caption: 'Texas Roadhouse POV2' },
+  // { src: `${VIDEOS_BASE}/5633E74D-9031-47E3-BD6C-B5C2DEDD2C2F.mp4`,         caption: 'Fall 25' },
+  // { src: `${VIDEOS_BASE}/team_night_out.mp4`,                               caption: 'Bus2' },
+  // { src: `${VIDEOS_BASE}/A39C18F9-5651-4740-BCBD-453066B86304.mp4`,         caption: 'Fall 25' },
 ];
