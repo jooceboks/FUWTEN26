@@ -46,11 +46,11 @@ export const results = [
   { date: 'Apr 2',  opp: 'Sacred Heart',    result: 'L', score: '2–5', maac: true  },
   { date: 'Apr 9',  opp: 'Marist',          result: 'W', score: '5–2', maac: true  },
   { date: 'Apr 12',  opp: 'Mount St. Mary\'s',          result: 'L', score: '2–5', maac: true  },
+  { date: 'Apr 15',  opp: 'Quinnipiac',          result: 'L', score: '1-6', maac: true  },
+  { date: 'Apr 19',  opp: 'Niagara',          result: 'W', score: '4-1', maac: true  },
 ];
 
 export const upcoming = [
-  { date: 'Apr 15', opp: 'at Quinnipiac'         },
-  { date: 'Apr 19', opp: 'vs Niagara'            },
   { date: 'Apr 25–26', opp: 'MAAC Championships — Princeton, NJ' },
 ];
 
